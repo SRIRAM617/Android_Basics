@@ -1,0 +1,185 @@
+JAVA:
+package com.example.u1;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.os.SystemClock;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity  {
+  private CheckBox alvp,godavari,pushpa;
+  private RadioGroup rg;
+  private RadioButton marry,unmarry;
+  private ProgressBar progressBar;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        alvp=findViewById(R.id.alvp);
+        godavari=findViewById(R.id.godavari);
+        pushpa=findViewById(R.id.pushpa);
+
+        marry=findViewById(R.id.marry);
+        unmarry=findViewById(R.id.unmarry);
+        rg=findViewById(R.id.rg);
+        progressBar=findViewById(R.id.progressBar);
+
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0;i<=9;i++){
+                    progressBar.incrementProgressBy(10);
+                    SystemClock.sleep(2000);
+                }
+            }
+        });
+        thread.start();
+
+        if(alvp.isChecked())
+        {
+            Toast.makeText(MainActivity.this, "You Watched ALVP,Songs are awesome", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(MainActivity.this, "You have to watch ALVP!!!", Toast.LENGTH_SHORT).show();
+        }
+
+        alvp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(alvp.isChecked())
+                {
+                    Toast.makeText(MainActivity.this, "You Watched ALVP,Songs are awesome", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "You have to watch ALVP!!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        int checkedButton=rg.getCheckedRadioButtonId();
+        switch(checkedButton)
+        {
+            case R.id.marry:
+                Toast.makeText(MainActivity.this, "You are married", Toast.LENGTH_SHORT).show();
+                //progressBar.setVisibility(View.VISIBLE);
+                break;
+            case R.id.unmarry:
+                Toast.makeText(MainActivity.this, "You are unmarried", Toast.LENGTH_SHORT).show();
+                //progressBar.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+
+      rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(RadioGroup group, int checkedId) {
+              switch(checkedId)
+              {
+                  case R.id.marry:
+                      Toast.makeText(MainActivity.this, "You are married", Toast.LENGTH_SHORT).show();
+                      //progressBar.setVisibility(View.VISIBLE);
+                      break;
+                  case R.id.unmarry:
+                      Toast.makeText(MainActivity.this, "You are unmarried", Toast.LENGTH_SHORT).show();
+                     //progressBar.setVisibility(View.GONE);
+                      break;
+                  default:
+                      break;
+              }
+          }
+      });
+
+
+
+    }
+
+
+
+}
+'
+XML:
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/moviesRelLayout"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="20dp">
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ALVP"
+        android:id="@+id/alvp"
+        android:checked="true"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Godavari"
+        android:id="@+id/godavari"
+        android:layout_toRightOf="@+id/alvp"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pushpa"
+        android:id="@+id/pushpa"
+        android:layout_toRightOf="@+id/godavari"/>
+</RelativeLayout>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/moviesRelLayout"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/rg">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Married"
+            android:id="@+id/marry"
+            android:checked="true"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unmarried"
+            android:id="@+id/unmarry"
+            />
+
+    </RadioGroup>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/progressBar"
+        android:visibility="visible"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:max="100"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+
+
+
+</RelativeLayout>
